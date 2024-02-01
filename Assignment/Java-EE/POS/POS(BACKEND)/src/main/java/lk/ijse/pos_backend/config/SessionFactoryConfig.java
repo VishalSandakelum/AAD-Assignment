@@ -21,11 +21,11 @@ public class SessionFactoryConfig {
     public SessionFactoryConfig() {
         Properties properties = new Properties();
         try {
-            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("hibernate.properties"));
+            properties.load(SessionFactoryConfig.class.getClassLoader().getResourceAsStream("hibernate.properties"));
         }catch (Exception e) {}
 
         sessionFactory = new Configuration()
-                .configure()
+                .setProperties(properties)
                 .addAnnotatedClass(CustomerEntity.class)
                 .addAnnotatedClass(ItemEntity.class)
                 .addAnnotatedClass(OrderEntity.class)

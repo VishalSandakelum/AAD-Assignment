@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Table(name = "order_details")
 public class OrderDetailsEntity {
     @Id
-    @Column(name = "order_details_id")
+    @Column(name = "order_details_id",
+            length = 50)
     private String OrderDetailsID;
     @ManyToOne
     @JoinColumn(name = "order_id",
