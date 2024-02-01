@@ -8,6 +8,10 @@ import lk.ijse.pos_backend.dao.custom.impl.*;
 **/
 public class DaoFactory {
     private static DaoFactory daoFactory;
+    private static CustomerDaoImpl customerDaoImpl;
+    private static ItemDaoImpl itemDaoImpl;
+    private static OrderDaoImpl orderDaoImpl;
+    private static OrderDetailsDaoImpl orderDetailsDaoImpl;
 
     private DaoFactory() {}
 
@@ -20,13 +24,14 @@ public class DaoFactory {
     public <SuperDao> SuperDao getDao(DaoType type){
         switch (type) {
             case CUSTOMER:
-                return (SuperDao) new CustomerDaoImpl();
+                return (SuperDao) ((customerDaoImpl==null) ? customerDaoImpl = new CustomerDaoImpl():customerDaoImpl);
             case ITEM:
-                return (SuperDao) new ItemDaoImpl();
+                return (SuperDao) ((itemDaoImpl==null) ? itemDaoImpl = new ItemDaoImpl():itemDaoImpl);
             case ORDER:
-                return (SuperDao) new OrderDaoImpl();
+                return (SuperDao) ((orderDaoImpl==null) ? orderDaoImpl = new OrderDaoImpl():orderDaoImpl);
             case ORDERDETAILS:
-                return (SuperDao) new OrderDetailsDaoImpl();
+                return (SuperDao) ((orderDetailsDaoImpl==null) ? orderDetailsDaoImpl = new OrderDetailsDaoImpl()
+                        :orderDetailsDaoImpl);
             default:
                 return null;
         }

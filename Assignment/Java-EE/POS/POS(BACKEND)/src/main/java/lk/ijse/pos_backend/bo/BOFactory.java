@@ -8,6 +8,10 @@ import lk.ijse.pos_backend.bo.custom.impl.*;
 **/
 public class BOFactory {
     private static BOFactory boFactory;
+    private static CustomerBOIMPL customerBOIMPL;
+    private static ItemBOIMPL itemBOIMPL;
+    private static OrderBOIMPL orderBOIMPL;
+    private static OrderDetailsBOIMPL orderDetailsBOIMPL;
 
     private BOFactory() {}
 
@@ -20,13 +24,14 @@ public class BOFactory {
     public <SuperBO> SuperBO getBo(BOtype type){
         switch (type){
             case CUSTOMER:
-                return (SuperBO) new CustomerBOIMPL();
+                return (SuperBO) ((customerBOIMPL==null) ? customerBOIMPL=new CustomerBOIMPL():customerBOIMPL);
             case ITEM:
-                return (SuperBO) new ItemBOIMPL();
+                return (SuperBO) ((itemBOIMPL==null) ? itemBOIMPL = new ItemBOIMPL():itemBOIMPL);
             case ORDER:
-                return (SuperBO) new OrderBOIMPL();
+                return (SuperBO) ((orderBOIMPL==null) ? orderBOIMPL = new OrderBOIMPL():orderBOIMPL);
             case ORDERDETAILS:
-                return (SuperBO) new OrderDetailsBOIMPL();
+                return (SuperBO) ((orderDetailsBOIMPL==null) ? orderDetailsBOIMPL = new OrderDetailsBOIMPL()
+                        :orderDetailsBOIMPL);
             default:
                 return null;
         }
