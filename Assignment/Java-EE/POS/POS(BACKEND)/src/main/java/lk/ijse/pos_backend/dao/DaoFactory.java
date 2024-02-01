@@ -1,9 +1,6 @@
 package lk.ijse.pos_backend.dao;
 
-import lk.ijse.pos_backend.dao.custom.impl.CustomerDaoImpl;
-import lk.ijse.pos_backend.dao.custom.impl.ItemDaoImpl;
-import lk.ijse.pos_backend.dao.custom.impl.OrderDaoImpl;
-import lk.ijse.pos_backend.dao.custom.impl.OrderDetailsDaoImpl;
+import lk.ijse.pos_backend.dao.custom.impl.*;
 
 /**
 *@author: Vishal Sandakelum,
