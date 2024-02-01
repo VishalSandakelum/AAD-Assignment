@@ -1,6 +1,8 @@
 package lk.ijse.pos_backend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 *@author: Vishal Sandakelum,
@@ -13,10 +15,16 @@ public class ItemEntity {
     @Id
     @Column(name = "code", length = 50)
     private String code;
-    @Column(name = "name", length =100)
+    @Column(name = "name",
+            length =100,
+            nullable = false)
     private String name;
-    @Column(name = "qty")
+    @Column(name = "qty",
+            nullable = false)
     private int qty;
-    @Column(name = "price")
+    @Column(name = "price",
+            nullable = false)
     private double price;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "Item")
+    private List<OrderDetailsEntity>orderDetailsEntities = new ArrayList<>();
 }

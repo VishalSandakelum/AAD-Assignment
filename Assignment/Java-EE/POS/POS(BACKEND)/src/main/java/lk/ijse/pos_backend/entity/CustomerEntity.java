@@ -1,6 +1,8 @@
 package lk.ijse.pos_backend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,10 +16,15 @@ public class CustomerEntity {
     @Id
     @Column(name = "id",length = 50)
     private String id;
-    @Column(name = "name",length = 100)
+    @Column(name = "name",
+            length = 100,
+            nullable = false)
     private String name;
-    @Column(name = "number")
+    @Column(name = "number",
+            nullable = false)
     private int number;
     @Column(name = "salary")
     private double salary;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<OrderEntity>orderEntities = new ArrayList<>();
 }

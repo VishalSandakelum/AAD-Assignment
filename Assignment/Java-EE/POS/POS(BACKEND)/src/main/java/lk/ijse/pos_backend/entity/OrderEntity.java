@@ -1,6 +1,9 @@
 package lk.ijse.pos_backend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
 *@author: Vishal Sandakelum,
@@ -15,7 +18,13 @@ public class OrderEntity {
     private String order_id;
     @ManyToOne
     @JoinColumn(name = "customer_id",
-    referencedColumnName = "id")
+    referencedColumnName = "id",
+            nullable = false)
     private CustomerEntity customer;
+    @Temporal(TemporalType.DATE)//Date Without Time
+    @Column(name = "date")
+    private Date date;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "Order")
+    private List<OrderDetailsEntity>orderDetailsEntities = new ArrayList<>();
 
 }
