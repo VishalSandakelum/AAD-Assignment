@@ -2,6 +2,7 @@ package lk.ijse.pos_backend.config;
 
 import lk.ijse.pos_backend.entity.CustomerEntity;
 import lk.ijse.pos_backend.entity.ItemEntity;
+import lk.ijse.pos_backend.entity.OrderDetailsEntity;
 import lk.ijse.pos_backend.entity.OrderEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,6 +29,7 @@ public class SessionFactoryConfig {
                 .addAnnotatedClass(CustomerEntity.class)
                 .addAnnotatedClass(ItemEntity.class)
                 .addAnnotatedClass(OrderEntity.class)
+                .addAnnotatedClass(OrderDetailsEntity.class)
                 .buildSessionFactory();
     }
 
