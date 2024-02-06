@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @Runtime version: 11.0.11+9-b1341.60 amd64
  **/
 
-@WebListener
+//@WebListener
 public class AppContentListner implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
