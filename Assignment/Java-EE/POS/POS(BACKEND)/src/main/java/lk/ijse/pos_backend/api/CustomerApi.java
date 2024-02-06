@@ -1,17 +1,14 @@
 package lk.ijse.pos_backend.api;
 
-import lk.ijse.pos_backend.config.SessionFactoryConfig;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.Session;
-
-import javax.servlet.ServletContext;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -21,15 +18,20 @@ import java.sql.SQLException;
 
 @WebServlet(name = "Customer",urlPatterns = "/customer")
 public class CustomerApi extends HttpServlet {
+
+    public static Connection getConnection() throws NamingException, SQLException {
+        Context initialContext = new InitialContext();
+        DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/DBCP");
+
+        return dataSource.getConnection();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletContext servletContext = req.getServletContext();
-        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("DBCP");
-
         Connection connection = null;
         try {
-            connection = dataSource.getConnection();
-        } catch (SQLException throwables) {
+            connection = CustomerApi.getConnection();
+        } catch (SQLException | NamingException throwables) {
             throwables.printStackTrace();
         }finally {
             try {
