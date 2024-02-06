@@ -1,9 +1,25 @@
 package lk.ijse.pos_backend.filter;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * @author: Vishal Sandakelum,
  * @Runtime version: 11.0.11+9-b1341.60 amd64
  **/
 
-public class CorsFIlter {
+@WebFilter(filterName = "CORSFilter",urlPatterns = "/*")
+public class CorsFIlter extends HttpFilter {
+    @Override
+    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        chain.doFilter(req, res);
+        res.setHeader("Access-Control-Allow-Origin","*");
+        res.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTION");
+        res.setHeader("Access-Control-Allow-Headers","Content-Type");
+    }
 }
