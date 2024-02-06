@@ -23,6 +23,13 @@
 
         //This Function For When Click The Save Button Save All Customer Details
         savebtn.addEventListener("click",function(){
+            $.ajax({
+                url:"http://localhost:8080/website/customer",
+                method:"GET",
+
+                success: function(resp){},
+                error:function(resp){}
+            });
           console.log(checkcustomertextfieldAR)
           if(checkcusID($('#cusId').val())){
             alert("OOPS , Alredy Exicts this Customer ID , Please enter any Customer ID !");
