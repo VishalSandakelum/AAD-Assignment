@@ -23,6 +23,12 @@
 
         //This Function For When Click The Save Button Save All Customer Details
         savebtn.addEventListener("click",function(){
+            var CustomerINFORMATION = {
+                id : $('#cusId').val(),
+                name : $('#cusName').val(),
+                address : $('#cusAddress').val(),
+                salary : $('#cusSalary').val()
+            }
             $.ajax({
                 url:"http://localhost:8080/website/customer",
                 method:"GET",

@@ -40,5 +40,6 @@ public class CustomerApi extends HttpServlet {
                 throwables.printStackTrace();
             }
         }
+        System.out.println("Get Method is Invoked");
     }
 }
