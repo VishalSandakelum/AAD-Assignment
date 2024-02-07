@@ -15,8 +15,9 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     private Session session;
 
     @Override
-    public String Save(OrderDetailsEntity orderDetailsEntity) {
-        return (String) session.save(orderDetailsEntity);
+    public Boolean Save(OrderDetailsEntity orderDetailsEntity) {
+        //return session.save(orderDetailsEntity);
+        return null;
     }
 
     @Override

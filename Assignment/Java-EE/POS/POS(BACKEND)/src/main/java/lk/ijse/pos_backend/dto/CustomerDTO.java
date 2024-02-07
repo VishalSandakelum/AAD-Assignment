@@ -12,14 +12,14 @@ import lombok.Data;
 public class CustomerDTO {
     private String Id;
     private String Name;
-    private int Number;
+    private String Address;
     private double Salary;
 
     public CustomerEntity ToEntity(){
         CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setId(this.Id);
         customerEntity.setName(this.Name);
-        customerEntity.setNumber(this.Number);
+        customerEntity.setAddress(this.Address);
         customerEntity.setSalary(this.Salary);
         return customerEntity;
     }

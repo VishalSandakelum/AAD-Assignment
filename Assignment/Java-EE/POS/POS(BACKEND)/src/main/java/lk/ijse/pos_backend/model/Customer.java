@@ -7,11 +7,10 @@ import lombok.*;
  * @Runtime version: 11.0.11+9-b1341.60 amd64
  **/
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Customer {
-    private String customerid;
-    private String customername;
-    private String customeraddress;
-    private String customersalary;
+    private String id;
+    private String name;
+    private String address;
+    private double salary;
 }

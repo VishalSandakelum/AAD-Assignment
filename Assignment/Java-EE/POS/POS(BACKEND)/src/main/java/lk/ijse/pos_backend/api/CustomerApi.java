@@ -1,5 +1,12 @@
 package lk.ijse.pos_backend.api;
 
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import lk.ijse.pos_backend.bo.BOFactory;
+import lk.ijse.pos_backend.bo.custom.CustomerBO;
+import lk.ijse.pos_backend.dto.CustomerDTO;
+import lk.ijse.pos_backend.model.Customer;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,6 +25,8 @@ import java.sql.SQLException;
 
 @WebServlet(name = "Customer",urlPatterns = "/customer")
 public class CustomerApi extends HttpServlet {
+
+    CustomerBO customerBO = BOFactory.getBoFactory().getBo(BOFactory.BOtype.CUSTOMER);
 
     public static Connection getConnection() throws NamingException, SQLException {
         Context initialContext = new InitialContext();
@@ -41,5 +50,38 @@ public class CustomerApi extends HttpServlet {
             }
         }
         System.out.println("Get Method is Invoked");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        Customer customer = jsonb.fromJson(req.getReader(), Customer.class);
+
+        try {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setId(customer.getId());
+            customerDTO.setName(customer.getName());
+            customerDTO.setAddress(customer.getAddress());
+            customerDTO.setSalary(customer.getSalary());
+
+            Boolean bool = customerBO.SaveCustomer(customerDTO);
+            if(bool){
+                resp.setStatus(200);
+            }else {
+                resp.setStatus(500);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resp.setStatus(500);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 }

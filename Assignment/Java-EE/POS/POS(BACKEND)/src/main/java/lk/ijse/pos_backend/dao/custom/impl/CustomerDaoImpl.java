@@ -1,8 +1,10 @@
 package lk.ijse.pos_backend.dao.custom.impl;
 
 import lk.ijse.pos_backend.dao.custom.CustomerDao;
+import lk.ijse.pos_backend.dao.custom.impl.Util.SqlUtil;
 import lk.ijse.pos_backend.entity.CustomerEntity;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.hibernate.Session;
 
 /**
@@ -14,9 +16,11 @@ import org.hibernate.Session;
 public class CustomerDaoImpl implements CustomerDao {
     private Session session;
 
+    @SneakyThrows
     @Override
-    public String Save(CustomerEntity customerEntity) {
-        return (String) session.save(customerEntity);
+    public Boolean Save(CustomerEntity customerEntity) {
+        return SqlUtil.execute("INSERT INTO customer(id, address, name, salary) VALUES(?, ?, ?, ?)",
+                customerEntity.getId(),customerEntity.getAddress(),customerEntity.getName(),customerEntity.getSalary());
     }
 
     @Override

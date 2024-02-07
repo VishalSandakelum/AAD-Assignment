@@ -13,22 +13,9 @@ import java.util.List;
 **/
 
 @Data
-
-@Entity
-@Table(name = "customer")
 public class CustomerEntity {
-    @Id
-    @Column(name = "id",length = 50)
     private String id;
-    @Column(name = "name",
-            length = 100,
-            nullable = false)
     private String name;
-    @Column(name = "number",
-            nullable = false)
-    private int number;
-    @Column(name = "salary")
+    private String address;
     private double salary;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-    private List<OrderEntity>orderEntities = new ArrayList<>();
 }

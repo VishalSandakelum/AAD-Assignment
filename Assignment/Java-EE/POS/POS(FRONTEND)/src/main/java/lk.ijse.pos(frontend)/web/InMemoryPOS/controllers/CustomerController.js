@@ -29,36 +29,20 @@
                 address : $('#cusAddress').val(),
                 salary : $('#cusSalary').val()
             }
-            $.ajax({
-                url:"http://localhost:8080/website/customer",
-                method:"GET",
 
-                success: function(resp){},
+            console.log(JSON.stringify(CustomerINFORMATION));
+            $.ajax({
+                url:'http://localhost:8080/website/customer',
+                method:'POST',
+                data:JSON.stringify(CustomerINFORMATION),
+                contentType: 'application/json',
+
+                success: function(resp){
+                    $('#cusdatatable td').parent().remove();
+                    getAllData();
+                },
                 error:function(resp){}
             });
-          console.log(checkcustomertextfieldAR)
-          if(checkcusID($('#cusId').val())){
-            alert("OOPS , Alredy Exicts this Customer ID , Please enter any Customer ID !");
-          }else{
-            console.log(customerFieldArrcheck());
-            if(customerFieldArrcheck()!==false){
-              let newCustomer = Object.assign({},Customer);
-
-              newCustomer.cusid = customerid.value;
-              newCustomer.name = cusnam.value;
-              newCustomer.cusnomber = address.value;
-              newCustomer.cussalry = Salary.value;
-
-              //Data Save
-              customerAr.push(newCustomer);
-              //Data Add For Table
-              $('#cusdatatable td').parent().remove();
-              getAllData();
-              console.log(customerAr);
-            }else{
-              alert('Please Enter Valid Value & Try Again !');
-            }
-          }
         });
 
         //This Function For View All Customer
@@ -77,7 +61,25 @@
 
         //This Function For Update Customer Button Action
         $('#customerupdatebtn').click(function(){
-          updateCustomer(customerid.value);
+            var CustomerINFORMATION = {
+                id : $('#cusId').val(),
+                name : $('#cusName').val(),
+                address : $('#cusAddress').val(),
+                salary : $('#cusSalary').val()
+            }
+
+            $.ajax({
+                url:'http://localhost:8080/website/customer',
+                method:'PUT',
+                data:JSON.stringify(CustomerINFORMATION),
+                contentType: 'application/json',
+
+                success: function(resp){
+                    $('#cusdatatable td').parent().remove();
+                    getAllData();
+                },
+                error:function(resp){}
+            });
         });
 
         $('#cusId').keyup(function(){

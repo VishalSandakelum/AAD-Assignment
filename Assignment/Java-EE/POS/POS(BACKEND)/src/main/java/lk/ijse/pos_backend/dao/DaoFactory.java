@@ -15,7 +15,7 @@ public class DaoFactory {
 
     private DaoFactory() {}
 
-    private static DaoFactory getDaoFactory(){return (daoFactory==null) ? daoFactory = new DaoFactory() : daoFactory;}
+    public static DaoFactory getDaoFactory(){return (daoFactory==null) ? daoFactory = new DaoFactory() : daoFactory;}
 
     public enum DaoType {
         CUSTOMER,ITEM,ORDER,ORDERDETAILS

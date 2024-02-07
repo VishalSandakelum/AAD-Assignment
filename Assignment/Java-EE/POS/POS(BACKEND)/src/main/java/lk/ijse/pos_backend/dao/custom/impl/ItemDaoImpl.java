@@ -15,8 +15,9 @@ public class ItemDaoImpl implements ItemDao {
     private Session session;
 
     @Override
-    public String Save(ItemEntity itemEntity) {
-        return (String) session.save(itemEntity);
+    public Boolean Save(ItemEntity itemEntity) {
+        //return session.save(itemEntity);
+        return null;
     }
 
     @Override

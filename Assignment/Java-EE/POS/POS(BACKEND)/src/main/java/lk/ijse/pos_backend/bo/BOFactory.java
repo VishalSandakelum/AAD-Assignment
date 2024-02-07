@@ -15,7 +15,7 @@ public class BOFactory {
 
     private BOFactory() {}
 
-    private static BOFactory getBoFactory(){return (boFactory==null) ? boFactory = new BOFactory() : boFactory;}
+    public static BOFactory getBoFactory(){return (boFactory==null) ? boFactory = new BOFactory() : boFactory;}
 
     public enum BOtype {
         CUSTOMER,ITEM,ORDER,ORDERDETAILS
