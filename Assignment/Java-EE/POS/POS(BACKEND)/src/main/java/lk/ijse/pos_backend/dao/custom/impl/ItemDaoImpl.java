@@ -26,8 +26,8 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void Update(ItemEntity itemEntity) {
-        session.update(itemEntity);
+    public Boolean Update(ItemEntity itemEntity) {
+        return null;
     }
 
     @Override

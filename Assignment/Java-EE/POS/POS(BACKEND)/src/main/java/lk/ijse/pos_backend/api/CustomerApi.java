@@ -28,28 +28,9 @@ public class CustomerApi extends HttpServlet {
 
     CustomerBO customerBO = BOFactory.getBoFactory().getBo(BOFactory.BOtype.CUSTOMER);
 
-    public static Connection getConnection() throws NamingException, SQLException {
-        Context initialContext = new InitialContext();
-        DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/DBCP");
-
-        return dataSource.getConnection();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = null;
-        try {
-            connection = CustomerApi.getConnection();
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try {
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        System.out.println("Get Method is Invoked");
+
     }
 
     @Override
@@ -78,7 +59,26 @@ public class CustomerApi extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        Customer customer = jsonb.fromJson(req.getReader(), Customer.class);
 
+        try {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setId(customer.getId());
+            customerDTO.setName(customer.getName());
+            customerDTO.setAddress(customer.getAddress());
+            customerDTO.setSalary(customer.getSalary());
+
+            Boolean bool = customerBO.UpdateCustomer(customerDTO);
+            if(bool){
+                resp.setStatus(200);
+            }else {
+                resp.setStatus(500);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resp.setStatus(500);
+        }
     }
 
     @Override

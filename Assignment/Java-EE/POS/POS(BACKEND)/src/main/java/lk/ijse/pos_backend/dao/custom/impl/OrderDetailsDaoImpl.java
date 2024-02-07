@@ -26,8 +26,8 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     }
 
     @Override
-    public void Update(OrderDetailsEntity orderDetailsEntity) {
-        session.update(orderDetailsEntity);
+    public Boolean Update(OrderDetailsEntity orderDetailsEntity) {
+        return null;
     }
 
     @Override

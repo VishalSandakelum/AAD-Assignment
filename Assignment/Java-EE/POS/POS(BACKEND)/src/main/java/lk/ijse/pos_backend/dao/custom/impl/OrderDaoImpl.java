@@ -26,8 +26,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void Update(OrderEntity orderEntity) {
-        session.update(orderEntity);
+    public Boolean Update(OrderEntity orderEntity) {
+        return null;
     }
 
     @Override

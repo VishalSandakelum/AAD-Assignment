@@ -20,7 +20,8 @@ public class CustomerDaoImpl implements CustomerDao {
     @Override
     public Boolean Save(CustomerEntity customerEntity) {
         return SqlUtil.execute("INSERT INTO customer(id, address, name, salary) VALUES(?, ?, ?, ?)",
-                customerEntity.getId(),customerEntity.getAddress(),customerEntity.getName(),customerEntity.getSalary());
+                customerEntity.getId(),customerEntity.getAddress(),customerEntity.getName(),customerEntity.getSalary()
+        );
     }
 
     @Override
@@ -28,9 +29,12 @@ public class CustomerDaoImpl implements CustomerDao {
         return session.get(CustomerEntity.class,id);
     }
 
+    @SneakyThrows
     @Override
-    public void Update(CustomerEntity customerEntity) {
-        session.update(customerEntity);
+    public Boolean Update(CustomerEntity customerEntity) {
+        return SqlUtil.execute("UPDATE customer SET address = ?, name = ?, salary = ? WHERE id  = ?",
+                customerEntity.getAddress(),customerEntity.getName(),customerEntity.getSalary(),customerEntity.getId()
+        );
     }
 
     @Override

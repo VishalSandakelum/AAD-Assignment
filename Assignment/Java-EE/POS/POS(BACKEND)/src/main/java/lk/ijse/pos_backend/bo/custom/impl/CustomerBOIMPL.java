@@ -25,7 +25,7 @@ public class CustomerBOIMPL implements CustomerBO {
 
     @Override
     public boolean UpdateCustomer(CustomerDTO customerDTO) {
-        return false;
+        return customerDao.Update(customerDTO.ToEntity());
     }
 
     @Override
