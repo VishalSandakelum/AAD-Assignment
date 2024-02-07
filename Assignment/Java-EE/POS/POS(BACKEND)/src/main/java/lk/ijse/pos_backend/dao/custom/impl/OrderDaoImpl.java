@@ -29,7 +29,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public OrderEntity Get(String id) {
+    public OrderEntity Search(String id) {
         return session.get(OrderEntity.class,id);
     }
 
@@ -39,8 +39,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void Delete(OrderEntity orderEntity) {
-        session.delete(orderEntity);
+    public Boolean Delete(String id) {
+        return null;
     }
 
     @Override

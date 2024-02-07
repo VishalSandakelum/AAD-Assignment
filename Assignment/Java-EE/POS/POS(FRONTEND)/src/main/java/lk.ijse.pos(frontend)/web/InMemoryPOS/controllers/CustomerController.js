@@ -47,15 +47,32 @@
 
         //This Function For View All Customer
         viewallbtn.addEventListener("click",function(){
+            $('#cusdatatable td').parent().remove();
             GetAllData();
         });
 
         //This Function For Delete Button Action
         $('#deletebtn').click(function(){
-          let id = $('#cusinputfield').val();
-          console.log(id);
-          deleteCustomer(id);
-          $('#cusinputfield').val('');
+            var CustomerINFORMATION = {
+                id : $('#cusinputfield').val(),
+                name : "Dummy",
+                address : "Dummy",
+                salary : 1
+            }
+
+            $.ajax({
+                url:'http://localhost:8080/website/customer',
+                method:'DELETE',
+                data:JSON.stringify(CustomerINFORMATION),
+                contentType: 'application/json',
+
+                success: function(resp){
+                    $('#cusdatatable td').parent().remove();
+                    GetAllData();
+                    $('#cusinputfield').val('');
+                },
+                error:function(resp){}
+            });
         });
 
         //This Function For Update Customer Button Action

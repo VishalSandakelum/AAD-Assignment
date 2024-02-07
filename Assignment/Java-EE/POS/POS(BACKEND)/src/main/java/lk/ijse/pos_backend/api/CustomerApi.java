@@ -101,6 +101,30 @@ public class CustomerApi extends HttpServlet {
     }
 
     @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        Customer customer = jsonb.fromJson(req.getReader(), Customer.class);
+
+        try {
+            CustomerEntity customerEntity = customerBO.getCustomer(customer.getId());
+            System.out.println(customerEntity.getName());
+            if(customerEntity.getName()!=(null)){
+                Boolean bool = customerBO.DeleteCustomer(customer.getId());
+                if(bool){
+                    resp.setStatus(200);
+                }else {
+                    resp.setStatus(500);
+                }
+            }else {
+                resp.setStatus(400);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resp.setStatus(500);
+        }
+    }
+
+    @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 }

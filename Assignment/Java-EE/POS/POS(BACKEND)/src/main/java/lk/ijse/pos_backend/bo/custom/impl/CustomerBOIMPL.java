@@ -5,6 +5,7 @@ import lk.ijse.pos_backend.dao.DaoFactory;
 import lk.ijse.pos_backend.dao.custom.CustomerDao;
 import lk.ijse.pos_backend.dto.CustomerDTO;
 import lk.ijse.pos_backend.entity.CustomerEntity;
+import lombok.SneakyThrows;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,9 +28,10 @@ public class CustomerBOIMPL implements CustomerBO {
         return customerDao.Save(customerDTO.ToEntity());
     }
 
+    @SneakyThrows
     @Override
-    public CustomerDTO getCustomer(String id) {
-        return null;
+    public CustomerEntity getCustomer(String id) {
+        return customerDao.Search(id);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class CustomerBOIMPL implements CustomerBO {
     }
 
     @Override
-    public boolean DeleteCustomer(CustomerDTO customerDTO) {
-        return false;
+    public boolean DeleteCustomer(String ID) {
+        return customerDao.Delete(ID);
     }
 }

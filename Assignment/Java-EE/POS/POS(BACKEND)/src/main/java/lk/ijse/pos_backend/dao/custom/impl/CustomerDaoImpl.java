@@ -50,9 +50,16 @@ public class CustomerDaoImpl implements CustomerDao {
         );
     }
 
+    @SneakyThrows
     @Override
-    public CustomerEntity Get(String id) {
-        return session.get(CustomerEntity.class,id);
+    public CustomerEntity Search(String id) {
+        ResultSet rst = SqlUtil.execute("SELECT * FROM customer WHERE id = ?",id);
+        return rst.next() ? new CustomerEntity(
+                rst.getString(1),
+                rst.getString(3),
+                rst.getString(2),
+                rst.getDouble(4)
+        ):null;
     }
 
     @SneakyThrows
@@ -63,9 +70,10 @@ public class CustomerDaoImpl implements CustomerDao {
         );
     }
 
+    @SneakyThrows
     @Override
-    public void Delete(CustomerEntity customerEntity) {
-        session.delete(customerEntity);
+    public Boolean Delete(String id) {
+        return SqlUtil.execute("DELETE FROM customer WHERE  id = ?",id);
     }
 
     @Override

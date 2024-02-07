@@ -29,7 +29,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public ItemEntity Get(String id) {
+    public ItemEntity Search(String id) {
         return session.get(ItemEntity.class, id);
     }
 
@@ -39,8 +39,8 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void Delete(ItemEntity itemEntity) {
-        session.delete(itemEntity);
+    public Boolean Delete(String id) {
+        return null;
     }
 
     @Override
