@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,10 +35,16 @@ public class CustomerApi extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("Get Invoked!");
         try {
-            ArrayList<CustomerEntity> arr = customerBO.GetAll();
-            if (arr != null && !arr.isEmpty()) {
-                System.out.println(arr);
+            ArrayList<CustomerEntity> arrayList = customerBO.GetAll();
+            Jsonb jsonb = JsonbBuilder.create();
+
+            if (arrayList != null && !arrayList.isEmpty()) {
+                System.out.println(arrayList);
             }
+            jsonb.toJson(arrayList,resp.getWriter());;
+
+            resp.setContentType("application/json");
+            resp.setStatus(200);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {

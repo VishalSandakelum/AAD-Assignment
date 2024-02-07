@@ -28,8 +28,8 @@ public class CustomerDaoImpl implements CustomerDao {
             while (rst.next()) {
                 data.add(new CustomerEntity(
                                 rst.getString(1),
-                                rst.getString(2),
                                 rst.getString(3),
+                                rst.getString(2),
                                 rst.getDouble(4)
                         )
                 );

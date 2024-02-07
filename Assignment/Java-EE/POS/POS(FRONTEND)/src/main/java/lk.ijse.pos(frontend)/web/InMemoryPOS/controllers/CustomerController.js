@@ -39,7 +39,7 @@
 
                 success: function(resp){
                     $('#cusdatatable td').parent().remove();
-                    getAllData();
+                    GetAllData();
                 },
                 error:function(resp){}
             });
@@ -47,17 +47,7 @@
 
         //This Function For View All Customer
         viewallbtn.addEventListener("click",function(){
-            $.ajax({
-                url:'http://localhost:8080/website/customer',
-                method:'GET',
-                dataType: 'json',
-
-                success: function(resp){
-                    $('#cusdatatable td').parent().remove();
-                    getAllData();
-                },
-                error:function(resp){}
-            });
+            GetAllData();
         });
 
         //This Function For Delete Button Action
@@ -85,7 +75,7 @@
 
                 success: function(resp){
                     $('#cusdatatable td').parent().remove();
-                    getAllData();
+                    GetAllData();
                 },
                 error:function(resp){}
             });
@@ -109,7 +99,7 @@
         });
 
         $('#cusAddress').keyup(function(){
-          if(testValid(/^0\d{9}$/,$('#cusAddress').val(),'#cusAddress',Salary)){
+          if(testValid(/^[A-Za-z ]{5,}$/,$('#cusAddress').val(),'#cusAddress',Salary)){
             checkcustomertextfieldAR[2] = 'true';
           }else{
             checkcustomertextfieldAR[2] = 'false';
@@ -150,26 +140,35 @@
           });
         }
 
-        //This Function For Get All Data From Array
-        function getAllData(){
-          for(i in customerAr){
-            console.log(customerAr[i]);
-            let custId = customerAr[i].cusid;
-            let custnam = customerAr[i].name;
-            let custnom = customerAr[i].cusnomber;
-            let custsal = customerAr[i].cussalry;
+        function GetAllData() {
+            $.ajax({
+                url:'http://localhost:8080/website/customer',
+                method:'GET',
+                dataType: 'json',
 
-            datarow(custId,custnam,custnom,custsal);
-          }
+                success: function(resp){
+                    console.log(resp)
+                    for (var i in resp) {
+                        var ID = resp[i].id;
+                        var NAME = resp[i].name;
+                        var ADDRESS = resp[i].address;
+                        var SALARY = resp[i].salary;
+                        console.log(ID);
+
+                        datarow(ID, NAME, ADDRESS, SALARY);
+                    }
+                },
+                error:function(resp){}
+            });
         }
 
         //This Function For All Data Add Add To The Table
-        function datarow(id,nam,nomb,sal){
+        function datarow(id,nam,address,sal){
 
           let row = `<tr>
                       <td>${id}</td>
                       <td>${nam}</td>
-                      <td>${nomb}</td>
+                      <td>${address}</td>
                       <td>${sal}</td>
                     </tr>`;
 
@@ -221,7 +220,7 @@
             console.log(customerAr);
           }
           $('#cusdatatable td').parent().remove();
-          getAllData();
+          //getAllData();
         }
 
         //This Function For When Click The Add new Customer Button , Clear All TextField
