@@ -5,6 +5,9 @@ import lk.ijse.pos_backend.entity.OrderEntity;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
 *@author: Vishal Sandakelum,
 *@Runtime version: 11.0.11+9-b1341.60 amd64
@@ -13,6 +16,11 @@ import org.hibernate.Session;
 @NoArgsConstructor
 public class OrderDaoImpl implements OrderDao {
     private Session session;
+
+    @Override
+    public ArrayList<OrderEntity> GetAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
     @Override
     public Boolean Save(OrderEntity orderEntity) {

@@ -5,6 +5,7 @@ import jakarta.json.bind.JsonbBuilder;
 import lk.ijse.pos_backend.bo.BOFactory;
 import lk.ijse.pos_backend.bo.custom.CustomerBO;
 import lk.ijse.pos_backend.dto.CustomerDTO;
+import lk.ijse.pos_backend.entity.CustomerEntity;
 import lk.ijse.pos_backend.model.Customer;
 
 import javax.naming.Context;
@@ -17,6 +18,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
 *@author: Vishal Sandakelum,
@@ -30,7 +32,17 @@ public class CustomerApi extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("Get Invoked!");
+        try {
+            ArrayList<CustomerEntity> arr = customerBO.GetAll();
+            if (arr != null && !arr.isEmpty()) {
+                System.out.println(arr);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

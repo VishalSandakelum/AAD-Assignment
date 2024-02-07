@@ -4,6 +4,10 @@ import lk.ijse.pos_backend.bo.custom.CustomerBO;
 import lk.ijse.pos_backend.dao.DaoFactory;
 import lk.ijse.pos_backend.dao.custom.CustomerDao;
 import lk.ijse.pos_backend.dto.CustomerDTO;
+import lk.ijse.pos_backend.entity.CustomerEntity;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
 *@author: Vishal Sandakelum,
@@ -12,6 +16,11 @@ import lk.ijse.pos_backend.dto.CustomerDTO;
 public class CustomerBOIMPL implements CustomerBO {
 
     CustomerDao customerDao = DaoFactory.getDaoFactory().getDao(DaoFactory.DaoType.CUSTOMER);
+
+    @Override
+    public ArrayList<CustomerEntity> GetAll() throws SQLException, ClassNotFoundException {
+        return customerDao.GetAll();
+    }
 
     @Override
     public Boolean SaveCustomer(CustomerDTO customerDTO) {

@@ -14,6 +14,7 @@ import java.sql.SQLException;
  **/
 
 public class SqlUtil {
+    private static Connection con = null;
     public static Connection getConnection() throws NamingException, SQLException {
         Context initialContext = new InitialContext();
         DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/DBCP");
@@ -22,7 +23,6 @@ public class SqlUtil {
     }
 
     public static <T>T execute(String sql, Object... args) throws SQLException, NamingException {
-        Connection con = null;
         try {
             con = SqlUtil.getConnection();
             PreparedStatement pstm = con.prepareStatement(sql);
@@ -40,7 +40,22 @@ public class SqlUtil {
             e.printStackTrace();
             return null;
         }finally {
-            con.close();
+            if (sql.startsWith("SELECT") || sql.startsWith("select")){
+            }else {
+                if(con!=null){
+                    con.close();
+                }
+            }
+        }
+    }
+
+    public static void CloseConnection(){
+        try {
+            if(con!=null){
+                con.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

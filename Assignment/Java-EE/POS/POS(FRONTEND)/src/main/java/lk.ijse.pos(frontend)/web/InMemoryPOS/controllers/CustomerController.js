@@ -47,8 +47,17 @@
 
         //This Function For View All Customer
         viewallbtn.addEventListener("click",function(){
-          $('#cusdatatable td').parent().remove();
-          getAllData();
+            $.ajax({
+                url:'http://localhost:8080/website/customer',
+                method:'GET',
+                dataType: 'json',
+
+                success: function(resp){
+                    $('#cusdatatable td').parent().remove();
+                    getAllData();
+                },
+                error:function(resp){}
+            });
         });
 
         //This Function For Delete Button Action
