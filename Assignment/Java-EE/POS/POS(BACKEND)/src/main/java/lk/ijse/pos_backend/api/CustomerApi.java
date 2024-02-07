@@ -8,16 +8,10 @@ import lk.ijse.pos_backend.dto.CustomerDTO;
 import lk.ijse.pos_backend.entity.CustomerEntity;
 import lk.ijse.pos_backend.model.Customer;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
