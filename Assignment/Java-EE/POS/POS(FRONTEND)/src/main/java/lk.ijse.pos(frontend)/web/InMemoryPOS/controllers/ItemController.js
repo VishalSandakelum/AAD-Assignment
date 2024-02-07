@@ -10,45 +10,80 @@ $('#addnewitmbtn').click(function(){
 });
 
 $('#itemsavebtn').click(function(){
-    if(checkCode($('#itemCode').val())){
-        alert("OOPS , Alredy Exicts this Item CODE , Please enter any Item CODE !");
-    }else{
-      if(itmFieldArrcheck()!==false){
-        let newItem = Object.assign({},Item);
+    var ItemINFORMATION = {
+        code : $('#itemCode').val(),
+        name : $('#itemName').val(),
+        qty : $('#itemQuantity').val(),
+        price : $('#itemPrices').val()
+    }
 
-        newItem.itmcode = $('#itemCode').val();
-        newItem.itmname = $('#itemName').val();
-        newItem.itmqty = $('#itemQuantity').val();
-        newItem.itmprice = $('#itemPrices').val();
+    console.log(JSON.stringify(ItemINFORMATION));
+    $.ajax({
+        url:'http://localhost:8080/website/item',
+        method:'POST',
+        data:JSON.stringify(ItemINFORMATION),
+        contentType: 'application/json',
 
-        item.push(newItem);
-
-        $('#itmtable td').parent().remove();
-        getAllDataitm();
-      }else{
-        alert('Please Enter Valid Value & Try Again !');
-      }
-  }
+        success: function(resp){
+            $('#itmtable td').parent().remove();
+            GetAllITMData();
+        },
+        error:function(resp){}
+    });
 });
 
 //This Function For View All Item
-$('#itmviewallbtn').click(function(){
+$('#itmviewallbtn').on('click',function(){
     $('#itmtable td').parent().remove();
-    getAllDataitm();
+    GetAllITMData();
  });
 
  //This Function For Update Item
  $('#itemupdatebtn').click(function(){
-    updateItem($('#itemCode').val());
+     var ItemINFORMATION = {
+         code : $('#itemCode').val(),
+         name : $('#itemName').val(),
+         qty : $('#itemQuantity').val(),
+         price : $('#itemPrices').val()
+     }
+
+     console.log(JSON.stringify(ItemINFORMATION));
+     $.ajax({
+         url:'http://localhost:8080/website/item',
+         method:'PUT',
+         data:JSON.stringify(ItemINFORMATION),
+         contentType: 'application/json',
+
+         success: function(resp){
+             $('#itmtable td').parent().remove();
+             GetAllITMData();
+         },
+         error:function(resp){}
+     });
  });
 
  //This Function For Delete Item
  $('#itmdeletebtn').click(function(){
-    let itmCODE = $('#itmCODfield').val();
-    deleteItem(itmCODE);
-    $('#itmCODfield').val('');
-    $('#itmtable td').parent().remove();
-    getAllDataitm();
+     var DeleteItemINFORMATION = {
+         code : $('#itmCODfield').val(),
+         name : "Dummy",
+         qty : 1,
+         price : 1
+     }
+
+     $.ajax({
+         url:'http://localhost:8080/website/item',
+         method:'DELETE',
+         data:JSON.stringify(DeleteItemINFORMATION),
+         contentType: 'application/json',
+
+         success: function(resp){
+             $('#itmtable td').parent().remove();
+             GetAllITMData();
+             $('#itmCODfield').val('');
+         },
+         error:function(resp){}
+     });
  });
 
  $('#itemCode').keyup(function(){
@@ -104,18 +139,29 @@ $('#itemQuantity').keyup(function(){
     });
   }
 
- //This Function For Get All Data From Array
- function getAllDataitm(){
-    for(i in item){
-      console.log(item[i]);
-      let itmcode = item[i].itmcode;
-      let itmname = item[i].itmname;
-      let itmqty = item[i].itmqty;
-      let itmprice = item[i].itmprice;
+ //This Function For Get All Data
+function GetAllITMData() {
+    $.ajax({
+        url:'http://localhost:8080/website/item',
+        method:'GET',
+        dataType: 'json',
 
-      datarowitm(itmcode,itmname,itmqty,itmprice);
-    }
-  }
+        success: function(resp){
+            console.log(resp)
+            for (var i in resp) {
+                var CODE = resp[i].code;
+                var NAME = resp[i].name;
+                var QTY = resp[i].qty;
+                var PRICE = resp[i].price;
+
+                datarowitm(CODE, NAME, PRICE, QTY);
+            }
+        },
+        error: function (xhr, status, error) {
+
+        }
+    });
+}
 
   //This Function For All Data Add Add To The Table
   function datarowitm(itmcode,itmname,itmqty,itmprice){
