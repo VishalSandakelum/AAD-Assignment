@@ -2,6 +2,11 @@ package lk.ijse.pos_backend.bo.custom.impl;
 
 import lk.ijse.pos_backend.bo.custom.OrderBO;
 import lk.ijse.pos_backend.dto.OrderDTO;
+import lk.ijse.pos_backend.dto.OrderDetailsDTO;
+import lk.ijse.pos_backend.entity.OrderEntity;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
 *@author: Vishal Sandakelum,
@@ -9,22 +14,27 @@ import lk.ijse.pos_backend.dto.OrderDTO;
 **/
 public class OrderBOIMPL implements OrderBO {
     @Override
-    public String SaveOrder(OrderDTO orderDTO) {
+    public ArrayList<OrderEntity> GetAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public OrderDTO getOrder(String id) {
+    public Boolean SaveOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO) {
         return null;
     }
 
     @Override
-    public boolean UpdateOrder(OrderDTO orderDTO) {
+    public OrderEntity getOrder(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean UpdateOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO) {
         return false;
     }
 
     @Override
-    public boolean DeleteOrder(OrderDTO orderDTO) {
+    public boolean DeleteOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO) {
         return false;
     }
 }
