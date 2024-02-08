@@ -14,18 +14,9 @@ import java.sql.SQLException;
  **/
 
 public class TransactionUtil {
-    private static Connection con = null;
-    public static Connection getConnection() throws NamingException, SQLException {
-        Context initialContext = new InitialContext();
-        DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/DBCP");
-
-        return dataSource.getConnection();
-    }
-
-    public static <T>T execute(String sql, Object... args) throws SQLException, NamingException {
+    public static <T>T execute(Connection connection,String sql, Object... args) throws SQLException, NamingException {
         try {
-            con = SqlUtil.getConnection();
-            PreparedStatement pstm = con.prepareStatement(sql);
+            PreparedStatement pstm = connection.prepareStatement(sql);
 
             for (int i = 0; i < args.length; i++) {
                 pstm.setObject((i + 1), args[i]);
@@ -39,16 +30,6 @@ public class TransactionUtil {
         }catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public static void CloseConnection(){
-        try {
-            if(con!=null){
-                con.close();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
     }
 }

@@ -14,13 +14,13 @@ import java.util.Date;
 @Data
 public class OrderDTO {
     private String OrderId;
-    private CustomerEntity Customer;
+    private String CustomerId;
     private Date date;
 
     public OrderEntity ToEntity(){
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrder_id(this.OrderId);
-        orderEntity.setCustomer(this.Customer);
+        orderEntity.setCustomerId(this.CustomerId);
         orderEntity.setDate(this.date);
         return orderEntity;
     }

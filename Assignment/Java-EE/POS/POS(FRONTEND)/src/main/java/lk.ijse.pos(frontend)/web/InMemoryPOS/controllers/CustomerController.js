@@ -172,6 +172,13 @@
                         var SALARY = resp[i].salary;
                         console.log(ID);
 
+                        let newCustomer = Object.assign({},Customer);
+                        newCustomer.name = NAME;
+                        newCustomer.cusid = ID;
+                        newCustomer.cusnomber = ADDRESS;
+                        newCustomer.cussalry = SALARY;
+                        customerAr.push(newCustomer);
+
                         datarow(ID, NAME, ADDRESS, SALARY);
                     }
                 },

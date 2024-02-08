@@ -2,12 +2,14 @@ package lk.ijse.pos_backend.dao.custom.impl;
 
 import lk.ijse.pos_backend.dao.custom.OrderDetailsDao;
 import lk.ijse.pos_backend.dao.custom.impl.Util.SqlUtil;
+import lk.ijse.pos_backend.dao.custom.impl.Util.TransactionUtil;
 import lk.ijse.pos_backend.entity.OrderDetailsEntity;
 import lk.ijse.pos_backend.entity.OrderEntity;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.hibernate.Session;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
     private Session session;
+    private Connection connection = null;
 
     @SneakyThrows
     @Override
@@ -48,7 +51,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     @SneakyThrows
     @Override
     public Boolean Save(OrderDetailsEntity orderDetailsEntity) {
-        return SqlUtil.execute("INSERT INTO order_details(order_details_id, item_name, qty, unit_price, item_id, order_id) VALUES(?, ?, ?, ?, ?, ?)",
+        return TransactionUtil.execute(this.connection,"INSERT INTO order_details(order_details_id, item_name, qty, unit_price, item_id, order_id) VALUES(?, ?, ?, ?, ?, ?)",
                 orderDetailsEntity.getOrderDetailsID(),orderDetailsEntity.getItemName(),orderDetailsEntity.getQuantity(),
                 orderDetailsEntity.getUnitPrice(),orderDetailsEntity.getItemID(),orderDetailsEntity.getOrderID()
         );
@@ -71,7 +74,7 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     @SneakyThrows
     @Override
     public Boolean Update(OrderDetailsEntity orderDetailsEntity) {
-        return SqlUtil.execute("UPDATE order_details SET item_name = ?, qty = ?, unit_price = ?, item_id = ?, order_id = ? WHERE order_details_id  = ?",
+        return TransactionUtil.execute(this.connection,"UPDATE order_details SET item_name = ?, qty = ?, unit_price = ?, item_id = ?, order_id = ? WHERE order_details_id  = ?",
                 orderDetailsEntity.getItemName(),orderDetailsEntity.getQuantity(),orderDetailsEntity.getUnitPrice(),
                 orderDetailsEntity.getItemID(),orderDetailsEntity.getOrderID(),orderDetailsEntity.getOrderDetailsID()
         );
@@ -80,11 +83,16 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
     @SneakyThrows
     @Override
     public Boolean Delete(String orderdetailsid) {
-        return SqlUtil.execute("DELETE FROM order_details WHERE  order_details_id = ?",orderdetailsid);
+        return TransactionUtil.execute(this.connection,"DELETE FROM order_details WHERE  order_details_id = ?",orderdetailsid);
     }
 
     @Override
     public void SetSession(Session session) {
         this.session = session;
+    }
+
+    @Override
+    public void SetConnection(Connection connection) {
+        this.connection = connection;
     }
 }

@@ -8,20 +8,20 @@ import lombok.Data;
 @Data
 public class OrderDetailsDTO {
     private String OrderDetailsID;
-    private OrderEntity Order;
-    private ItemEntity Item;
     private String ItemName;
-    private double UnitPrice;
     private int Quantity;
+    private double UnitPrice;
+    private String ItemID;
+    private String OrderID;
 
     public OrderDetailsEntity ToEntity() {
         OrderDetailsEntity orderDetailsEntity = new OrderDetailsEntity();
         orderDetailsEntity.setOrderDetailsID(this.OrderDetailsID);
-        orderDetailsEntity.setOrder(this.Order);
-        orderDetailsEntity.setItem(this.Item);
         orderDetailsEntity.setItemName(this.ItemName);
-        orderDetailsEntity.setUnitPrice(this.UnitPrice);
         orderDetailsEntity.setQuantity(this.Quantity);
+        orderDetailsEntity.setUnitPrice(this.UnitPrice);
+        orderDetailsEntity.setItemID(this.ItemID);
+        orderDetailsEntity.setOrderID(this.OrderID);
         return orderDetailsEntity;
     }
 }

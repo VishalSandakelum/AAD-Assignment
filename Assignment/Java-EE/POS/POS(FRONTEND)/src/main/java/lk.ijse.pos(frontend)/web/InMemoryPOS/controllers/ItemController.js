@@ -154,6 +154,14 @@ function GetAllITMData() {
                 var QTY = resp[i].qty;
                 var PRICE = resp[i].price;
 
+                let newItem = Object.assign({},Item);
+                newItem.itmcode = CODE;
+                newItem.itmname = NAME;
+                newItem.itmprice = PRICE;
+                newItem.itmqty = QTY;
+                item.push(newItem);
+                console.log(item.length)
+
                 datarowitm(CODE, NAME, PRICE, QTY);
             }
         },

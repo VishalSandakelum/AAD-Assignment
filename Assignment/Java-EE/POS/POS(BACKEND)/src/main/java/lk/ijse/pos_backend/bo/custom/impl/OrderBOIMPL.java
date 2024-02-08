@@ -1,10 +1,16 @@
 package lk.ijse.pos_backend.bo.custom.impl;
 
 import lk.ijse.pos_backend.bo.custom.OrderBO;
+import lk.ijse.pos_backend.dao.DaoFactory;
+import lk.ijse.pos_backend.dao.custom.OrderDao;
+import lk.ijse.pos_backend.dao.custom.OrderDetailsDao;
+import lk.ijse.pos_backend.dbresources.DBResources;
 import lk.ijse.pos_backend.dto.OrderDTO;
 import lk.ijse.pos_backend.dto.OrderDetailsDTO;
 import lk.ijse.pos_backend.entity.OrderEntity;
 
+import javax.naming.NamingException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,6 +19,11 @@ import java.util.ArrayList;
 *@Runtime version: 11.0.11+9-b1341.60 amd64
 **/
 public class OrderBOIMPL implements OrderBO {
+
+    Connection connection = null;
+    OrderDao orderDao = DaoFactory.getDaoFactory().getDao(DaoFactory.DaoType.ORDER);
+    OrderDetailsDao orderDetailsDao = DaoFactory.getDaoFactory().getDao(DaoFactory.DaoType.ORDERDETAILS);
+
     @Override
     public ArrayList<OrderEntity> GetAll() throws SQLException, ClassNotFoundException {
         return null;
@@ -20,7 +31,38 @@ public class OrderBOIMPL implements OrderBO {
 
     @Override
     public Boolean SaveOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO) {
-        return null;
+        try {
+            connection = DBResources.getConnection();
+            connection.setAutoCommit(false);
+
+            orderDao.SetConnection(connection);
+            orderDetailsDao.SetConnection(connection);
+            boolean Save = orderDao.Save(orderDTO.ToEntity());
+            if (Save){
+                boolean bool = orderDetailsDao.Save(orderDetailsDTO.ToEntity());
+                if(bool){
+                    connection.commit();
+                    return bool;
+                }else {
+                    connection.rollback();
+                    return false;
+                }
+            }else {
+                return false;
+            }
+        } catch (SQLException|NamingException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            if(connection!=null){
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override

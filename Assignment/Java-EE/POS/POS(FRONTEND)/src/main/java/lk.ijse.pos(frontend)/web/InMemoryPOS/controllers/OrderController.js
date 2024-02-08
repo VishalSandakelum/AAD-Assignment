@@ -2,6 +2,9 @@ let cusstate = document.querySelector('#cusstate');
 let itmsatate = document.querySelector('#inputitmState');
 document.querySelector('#orderidfield').disabled = true;
 
+GetAllITMData();
+GetAllData();
+
 let Arr = [];
 
 let bool = false;
@@ -10,18 +13,24 @@ cusstate.style.borderm = '2px solid red'
 
 $('#orderidfield').val(genaratenewOID());
 
-for (i in customerAr) {
-    const option = document.createElement("option");
-    option.text = customerAr[i].cusid;
-    
-    cusstate.appendChild(option);
+function AddCustomerOptoins(){
+    document.getElementById("cusstate").innerHTML = "";
+    for (i in customerAr) {
+        const option = document.createElement("option");
+        option.text = customerAr[i].cusid;
+
+        cusstate.appendChild(option);
+    }
 }
 
-for (i in item) {
-    const option = document.createElement("option");
-    option.text = item[i].itmcode;
-    
-    itmsatate.appendChild(option);
+function AddItemOptions(){
+    for (i in item) {
+        const option = document.createElement("option");
+        option.text = item[i].itmcode;
+        console.log("itemstate",item[i].itmcode)
+
+        itmsatate.appendChild(option);
+    }
 }
 
 cusstate.addEventListener("change", function() {
@@ -88,13 +97,30 @@ $('#additembtnO').click(function(){
 $('#purchObtnO').click(function(){
     let neworder = Object.assign({},order);
 
-    neworder.oid = $('#orderidfield').val();
-    neworder.date = $('#datefielsO').val();
-    neworder.customerID = $('#cusIDfield').val();
-    neworder.orderDetails = Arr;
-    
-    orderDB.push(neworder);
-    console.log(orderDB);
+    var OrderINFORMATION = {
+        orderId : $('#orderidfield').val(),
+        date : $('#datefielsO').val(),
+        customerId : $('#cusIDfield').val(),
+        orderDetailsId : $('#orderidfield').val(),
+        itemName : $('#itemNamefield').val(),
+        qty : $('#orderQuantityField').val(),
+        unitPrice : $('#itemPriceField').val(),
+        itemId : $('#itIdField').val()
+    }
+
+    console.log(OrderINFORMATION)
+    $.ajax({
+        url:'http://localhost:8080/website/order',
+        method:'POST',
+        data:JSON.stringify(OrderINFORMATION),
+        contentType: 'application/json',
+
+        success: function(resp){
+            //$('#itmtable td').parent().remove();
+            //GetAllITMData();
+        },
+        error:function(resp){}
+    });
 
     Arr = [];
     $('#orderitmtable td').parent().remove();
