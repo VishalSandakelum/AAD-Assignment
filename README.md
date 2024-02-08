@@ -15,12 +15,12 @@ SimpleMart POS offers a streamlined solution to facilitate transactions and opti
 
 ## Functions
 
-- **Ensuring Fundamental Validations**
-  ![Validation Image](./Assignment/Java-EE/POS/pictures/validation.png)
+- Ensuring fundamental validations
+  ![image](./Assignment/Java-EE/POS/pictures/validation.png)
 
-- **User-Friendly Atmosphere for Easy Access**
-  ![User-Friendly Alert Image](./Assignment/Java-EE/POS/pictures/userfriendlyalert.png)
-  ![User-Friendly Image](./Assignment/Java-EE/POS/pictures/userfriendly.png)
+- User-friendly atmosphere for easy access
+  ![image](./Assignment/Java-EE/POS/pictures/userfreindlyalert.png)
+  ![image](./Assignment/Java-EE/POS/pictures/userfreindly.png)
 
-- **Place Order Management**
-  ![Order Management Image](./Assignment/Java-EE/POS/pictures/ordermanagement.png)
+- Place Order Management
+  ![image](./Assignment/Java-EE/POS/pictures/ordermanagement.png)
