@@ -1,6 +1,6 @@
 package lk.ijse.pos_backend.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,31 +10,13 @@ import javax.persistence.*;
 **/
 
 @Data
-
-@Entity
-@Table(name = "order_details")
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetailsEntity {
-    @Id
-    @Column(name = "order_details_id",
-            length = 50)
     private String OrderDetailsID;
-    @ManyToOne
-    @JoinColumn(name = "order_id",
-            referencedColumnName = "order_id",
-            nullable = false)
-    private OrderEntity Order;
-    @ManyToOne
-    @JoinColumn(name = "item_id",
-            referencedColumnName = "code",
-            nullable = false)
-    private ItemEntity Item;
-    @Column(name = "item_name",
-            nullable = false)
     private String ItemName;
-    @Column(name = "unit_price",
-            nullable = false)
-    private double UnitPrice;
-    @Column(name = "qty",
-            nullable = false)
     private int Quantity;
+    private double UnitPrice;
+    private String ItemID;
+    private String OrderID;
 }

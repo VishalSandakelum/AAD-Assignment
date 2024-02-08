@@ -1,6 +1,6 @@
 package lk.ijse.pos_backend.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,22 +13,10 @@ import java.util.List;
 **/
 
 @Data
-
-@Entity
-@Table(name = "orders")
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderEntity {
-    @Id
-    @Column(name = "order_id", length = 50)
     private String order_id;
-    @ManyToOne
-    @JoinColumn(name = "customer_id",
-    referencedColumnName = "id",
-            nullable = false)
-    private CustomerEntity customer;
-    @Temporal(TemporalType.DATE)//Date Without Time
-    @Column(name = "date")
     private Date date;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "Order")
-    private List<OrderDetailsEntity>orderDetailsEntities = new ArrayList<>();
-
+    private String customerId;
 }

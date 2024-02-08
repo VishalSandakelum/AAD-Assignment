@@ -1,10 +1,13 @@
 package lk.ijse.pos_backend.dao.custom.impl;
 
 import lk.ijse.pos_backend.dao.custom.OrderDao;
+import lk.ijse.pos_backend.dao.custom.impl.Util.SqlUtil;
 import lk.ijse.pos_backend.entity.OrderEntity;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.hibernate.Session;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,30 +20,58 @@ import java.util.ArrayList;
 public class OrderDaoImpl implements OrderDao {
     private Session session;
 
+    @SneakyThrows
     @Override
     public ArrayList<OrderEntity> GetAll() throws SQLException, ClassNotFoundException {
-        return null;
+        try (ResultSet rst = SqlUtil.execute("SELECT * FROM orders")) {
+            ArrayList<OrderEntity> data = new ArrayList<>();
+            while (rst.next()) {
+                data.add(new OrderEntity(
+                                rst.getString(1),
+                                rst.getDate(2),
+                                rst.getString(3)
+                        )
+                );
+            }
+            SqlUtil.CloseConnection();
+            return data;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    @SneakyThrows
     @Override
     public Boolean Save(OrderEntity orderEntity) {
-        //return (String) session.save(orderEntity);
-        return null;
+        return SqlUtil.execute("INSERT INTO orders(order_id, date, customer_id) VALUES(?, ?, ?)",
+                orderEntity.getOrder_id(),orderEntity.getDate(),orderEntity.getCustomerId()
+        );
     }
 
+    @SneakyThrows
     @Override
     public OrderEntity Search(String id) {
-        return session.get(OrderEntity.class,id);
+        ResultSet rst = SqlUtil.execute("SELECT * FROM orders WHERE order_id = ?",id);
+        return rst.next() ? new OrderEntity(
+                rst.getString(1),
+                rst.getDate(2),
+                rst.getString(3)
+        ):null;
     }
 
+    @SneakyThrows
     @Override
     public Boolean Update(OrderEntity orderEntity) {
-        return null;
+        return SqlUtil.execute("UPDATE orders SET date = ?, customer_id = ? WHERE order_id  = ?",
+                orderEntity.getDate(),orderEntity.getCustomerId(),orderEntity.getOrder_id()
+        );
     }
 
+    @SneakyThrows
     @Override
-    public Boolean Delete(String id) {
-        return null;
+    public Boolean Delete(String orderid) {
+        return SqlUtil.execute("DELETE FROM orders WHERE  code = ?",orderid);
     }
 
     @Override
