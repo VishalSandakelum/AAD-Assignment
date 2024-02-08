@@ -40,9 +40,8 @@ public class OrderApi extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Jsonb jsonb = JsonbBuilder.create();
-            System.out.println("come");
             Order order = jsonb.fromJson(req.getReader(), Order.class);
-            System.out.println("no");
+            //System.out.println("no");
 
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setOrderId(order.getOrderId());
@@ -60,6 +59,24 @@ public class OrderApi extends HttpServlet {
             System.out.println("Order:"+order);
 
             Boolean bool = orderBO.SaveOrder(orderDTO,orderDetailsDTO);
+            if(bool){
+                resp.setStatus(200);
+            }else {
+                resp.setStatus(500);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resp.setStatus(500);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Jsonb jsonb = JsonbBuilder.create();
+            Order order = jsonb.fromJson(req.getReader(), Order.class);
+
+            Boolean bool = orderBO.DeleteOrder(order.getOrderId());
             if(bool){
                 resp.setStatus(200);
             }else {

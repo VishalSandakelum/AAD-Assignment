@@ -1,5 +1,7 @@
 package lk.ijse.pos_backend.dao.custom.impl.Util;
 
+import lk.ijse.pos_backend.dbresources.DBResources;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,16 +17,10 @@ import java.sql.SQLException;
 
 public class SqlUtil {
     private static Connection con = null;
-    public static Connection getConnection() throws NamingException, SQLException {
-        Context initialContext = new InitialContext();
-        DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/DBCP");
-
-        return dataSource.getConnection();
-    }
 
     public static <T>T execute(String sql, Object... args) throws SQLException, NamingException {
         try {
-            con = SqlUtil.getConnection();
+            con = DBResources.getConnection();
             PreparedStatement pstm = con.prepareStatement(sql);
 
             for (int i = 0; i < args.length; i++) {

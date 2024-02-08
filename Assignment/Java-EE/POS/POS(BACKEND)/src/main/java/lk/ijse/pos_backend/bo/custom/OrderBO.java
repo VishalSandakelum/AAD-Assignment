@@ -17,5 +17,5 @@ public interface OrderBO extends SuperBO {
     Boolean SaveOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO);
     OrderEntity getOrder(String id);
     boolean UpdateOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO);
-    boolean DeleteOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO);
+    boolean DeleteOrder(String OrderId);
 }

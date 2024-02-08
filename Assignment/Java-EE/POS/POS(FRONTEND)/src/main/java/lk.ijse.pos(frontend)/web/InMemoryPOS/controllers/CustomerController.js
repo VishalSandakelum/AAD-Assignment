@@ -38,10 +38,13 @@
                 contentType: 'application/json',
 
                 success: function(resp){
+                    alert('Customer Saved Successfully!')
                     $('#cusdatatable td').parent().remove();
                     GetAllData();
                 },
-                error:function(resp){}
+                error:function(resp){
+                    alert('This CUstomer ID Already Exists!')
+                }
             });
         });
 

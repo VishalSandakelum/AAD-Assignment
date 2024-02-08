@@ -76,7 +76,38 @@ public class OrderBOIMPL implements OrderBO {
     }
 
     @Override
-    public boolean DeleteOrder(OrderDTO orderDTO, OrderDetailsDTO orderDetailsDTO) {
-        return false;
+    public boolean DeleteOrder(String OrderId) {
+        try {
+            connection = DBResources.getConnection();
+            connection.setAutoCommit(false);
+
+            orderDao.SetConnection(connection);
+            orderDetailsDao.SetConnection(connection);
+            boolean Delete = orderDetailsDao.Delete(OrderId);
+            if (Delete){
+                boolean bool = orderDao.Delete(OrderId);
+                if(bool){
+                    connection.commit();
+                    return bool;
+                }else {
+                    connection.rollback();
+                    return false;
+                }
+            }else {
+                return false;
+            }
+        } catch (SQLException|NamingException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            if(connection!=null){
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
     }
 }
